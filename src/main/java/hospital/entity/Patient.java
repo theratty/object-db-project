@@ -5,6 +5,7 @@ import javax.persistence.*;
 import java.sql.Date;
 
 @Entity
+@Table(name = "patients")
 public class Patient implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -28,12 +29,13 @@ public class Patient implements Serializable {
     public Patient() {
     }
 
-    public Patient(String name, Date birthDate, String sex, Date hospitalizationDate, Integer drugsReceived) {
+    public Patient(String name, Date birthDate, String sex, Date hospitalizationDate, Integer drugsReceived, String drug) {
         this.name = name;
         this.birthDate = birthDate;
         this.sex = sex;
         this.hospitalizationDate = hospitalizationDate;
         this.drugsReceived = drugsReceived;
+        this.drug = drug;
     }
 
     public String getName() {

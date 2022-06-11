@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
 @Entity
+@Table(name = "diagnoses")
 public class Diagnosis implements Serializable {
     private static final long serialVersionUID = 1L;
 
