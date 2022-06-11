@@ -2,12 +2,13 @@ package hospital;
 
 
 import hospital.entity.*;
+import org.hibernate.Session;
 
 import javax.persistence.EntityManager;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.sql.Date;
 
 public class Helper {
 
@@ -83,6 +84,50 @@ public class Helper {
 
 
         em.getTransaction().commit();
+    }
+
+
+    static public void generateRelationalDatabase(Session session) {
+        session.beginTransaction();
+
+        for (int i = 0; i < 1000; i++) {
+            Department department = new Department(Helper.generate("Department", i), Helper.generateNum(), null, null);
+            List<Patient> patients = new ArrayList<Patient>();
+            for (int j = 0; j < Helper.generateNum(); j++) {
+                Patient patient = new Patient(Helper.generate("Patient", j), Helper.generateDate(2000), Helper.generateSex(), Helper.generateDate(2020), Helper.generateNum(), Helper.generateDrug());
+                patients.add(patient);
+                patient.setDepartment(department);
+            }
+            department.setPatients(patients);
+            Doctor doctor = new Doctor(Helper.generate("Doctor", i), Helper.generate("Speciality", i), department);
+            department.setDoctor(doctor);
+
+            List<Diagnosis> diagnoses = new ArrayList<Diagnosis>();
+
+            for (int j = 0; j < patients.size(); j++) {
+                Diagnosis diagnosis = new Diagnosis(Helper.generate("Diagnosis", j), Helper.generateDate(2021), doctor);
+                diagnoses.add(diagnosis);
+                patients.get(j).setDiagnosis(diagnosis);
+            }
+            doctor.setDiagnoses(diagnoses);
+            Disease disease = new Disease(Helper.generate("Disease", i), diagnoses);
+            for (Diagnosis diagnosis : diagnoses) {
+                diagnosis.setDisease(disease);
+            }
+
+            session.persist(department);
+            session.persist(doctor);
+            for (Patient patient : patients) {
+                session.persist(patient);
+            }
+            for (Diagnosis diagnosis : diagnoses) {
+                session.persist(diagnosis);
+            }
+            session.persist(disease);
+        }
+
+
+        session.getTransaction().commit();
     }
 
 

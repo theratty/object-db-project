@@ -27,7 +27,7 @@ public class HibernateConnector {
         cfg.setProperty("hibernate.connection.driver_class", "org.postgresql.Driver");
         cfg.setProperty("hibernate.connection.url", "jdbc:postgresql://localhost:5432/postgres");
         cfg.setProperty("hibernate.connection.username", "postgres");
-        cfg.setProperty("hibernate.hbm2ddl.auto", "create");
+        cfg.setProperty("hibernate.hbm2ddl.auto", "update");
         cfg.setProperty("hibernate.connection.password", "password123");
         cfg.setProperty("hibernate.javax.persistence.create-database-schemas", "true");
         cfg.setProperty("hibernate.show_sql", "true");
