@@ -1,5 +1,6 @@
 package hospital.hibernate;
 
+import hospital.entity.*;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -16,13 +17,15 @@ public class HibernateConnector {
 // build the config
         cfg = new Configuration();
 
-/**
- * Connection Information..
- */
 
+        cfg.addAnnotatedClass(Department.class);
+        cfg.addAnnotatedClass(Diagnosis.class);
+        cfg.addAnnotatedClass(Disease.class);
+        cfg.addAnnotatedClass(Doctor.class);
+        cfg.addAnnotatedClass(Patient.class);
 
         cfg.setProperty("hibernate.connection.driver_class", "org.postgresql.Driver");
-        cfg.setProperty("hibernate.connection.url", "jdbc:postgresql://localhost:5432/");
+        cfg.setProperty("hibernate.connection.url", "jdbc:postgresql://localhost:5432/postgres");
         cfg.setProperty("hibernate.connection.username", "postgres");
         cfg.setProperty("hibernate.hbm2ddl.auto", "create");
         cfg.setProperty("hibernate.connection.password", "password123");
